@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "layui-icon"; /* Project id 1384936 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1694068528280') format('woff2'),
+       url('iconfont.woff?t=1694068528280') format('woff'),
+       url('iconfont.ttf?t=1694068528280') format('truetype');
+}
+
+.layui-icon {
+  font-family: "layui-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-extend-md:before {
+  content: "\e618";
+}
+
+.layui-extend-file:before {
+  content: "\e61a";
+}
+
+.layui-extend-folder:before {
+  content: "\e8da";
+}
+
+.layui-extend-picture:before {
+  content: "\e722";
+}
+
+.layui-extend-ppt:before {
+  content: "\e60c";
+}
+
+.layui-extend-pdf:before {
+  content: "\e662";
+}
+
+.layui-extend-video:before {
+  content: "\e641";
+}
+
+.layui-extend-doc:before {
+  content: "\e735";
+}
+
+.layui-extend-music:before {
+  content: "\e924";
+}
+
+.layui-extend-xls:before {
+  content: "\e678";
+}
+
+.layui-extend-txt:before {
+  content: "\e6c8";
+}
+

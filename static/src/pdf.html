@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>view</title>
+    <link rel="stylesheet" href="/plugins/pdfh5/css/pdfh5.css" />
+    <style>
+        .pdf {
+            height: 30rem;
+            border: 1rem solid rgba(0, 0, 0, .1);
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<div id="pdf"></div>
+<script src="/plugins/pdfobject.min.js"></script>
+<script src="/plugins/pdfh5/js/pdf.js"></script>
+<script src="/plugins/pdfh5/js/pdf.worker.js"></script>
+<script src="/plugins/pdfh5/js/jquery-3.6.0.min.js"></script>
+<script src="/plugins/pdfh5/js/pdfh5.js"></script>
+<script>
+    function initialization(path){
+        let url = `/api/view?path=${path}`
+        if (/(iPhone|iPad|iPod|iOS|Android|HarmonyOS)/i.test(navigator.userAgent)) {
+            //这个插件不太行
+            new Pdfh5('#pdf', {
+                pdfurl: url
+            });
+        } else {
+            PDFObject.embed(url, "#pdf");
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>view</title>
+    <link href="plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="plugins/viewerjs/dist/viewer.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+</head>
+<body id="app">
+<div class="layui-row layui-layer-padding ">
+    <form class="layui-form" action="" lay-filter="demo-val-filter">
+        <div class="layui-form-item div-top">
+            <div class="layui-input-group">
+                <input type="text" name="search" placeholder="请输入文件名" lay-affix="clear" class="layui-input">
+                <div class="layui-input-split layui-input-suffix layui-btn layui-btn-primary" lay-on="i-search" style="cursor: pointer;">
+                    <i class="layui-icon layui-icon-search"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item div-bottom">
+            <div class="layui-input-group">
+                <div class="layui-input-split layui-input-prefix layui-btn layui-btn-primary" lay-on="get-retreat">
+                    返回
+                </div>
+                <input type="text" name="path" lay-verify="required" autocomplete="off" lay-reqtext="请填地址" lay-affix="clear"  class="layui-input input-path">
+                <div class="layui-input-split layui-input-suffix layui-btn layui-btn-primary" lay-on="get-forward">
+                    跳转
+                </div>
+            </div>
+        </div>
+<!--        <div class="layui-col-xs2 layui-col-md2" style="padding: 0!important;text-align: center;">-->
+<!--            <button type="button" class="layui-btn layui-btn-primary" lay-on="get-retreat">返回</button>-->
+<!--        </div>-->
+<!--        <div class="layui-col-xs8 layui-col-md8">-->
+<!--            <input type="tel" name="path" lay-verify="required" autocomplete="off" lay-reqtext="请填地址" lay-affix="clear" class="layui-input input-path">-->
+<!--        </div>-->
+<!--        <div class="layui-col-xs2 layui-col-md2" style="padding: 0!important;text-align: center;">-->
+<!--            <button type="button" class="layui-btn layui-btn-primary" lay-on="get-forward">跳转</button>-->
+<!--        </div>-->
+    </form>
+</div>
+<!--内容-->
+<div id="content"></div>
+<!-- HTML Content -->
+<script src="js/jquery.min.js"></script>
+<script src="plugins/axios/dist/axios.min.js"></script>
+<script src="plugins/layui/layui.js"></script>
+<script src="plugins/dplayer/dist/DPlayer.min.js"></script>
+<script src="plugins/viewerjs/dist/viewer.js"></script>
+<script src="js/stack.js"></script>
+<script src="js/download.js"></script>
+<script src="js/icon.js"></script>
+<script src="js/index.js"></script>
+
+
+</body>
+</html>

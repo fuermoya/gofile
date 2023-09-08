@@ -1,0 +1,86 @@
+{
+  "id": "1384936",
+  "name": "layui-extend-扩展图标",
+  "font_family": "layui-icon",
+  "css_prefix_text": "layui-extend-",
+  "description": "layui-extend-扩展图标",
+  "glyphs": [
+    {
+      "icon_id": "19035879",
+      "name": "md",
+      "font_class": "md",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "109739",
+      "name": "file",
+      "font_class": "file",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "924374",
+      "name": "folder",
+      "font_class": "folder",
+      "unicode": "e8da",
+      "unicode_decimal": 59610
+    },
+    {
+      "icon_id": "5833012",
+      "name": "picture",
+      "font_class": "picture",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
+      "icon_id": "1453456",
+      "name": "ppt",
+      "font_class": "ppt",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "6347324",
+      "name": "pdf",
+      "font_class": "pdf",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "6419933",
+      "name": "video",
+      "font_class": "video",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "6472244",
+      "name": "doc",
+      "font_class": "doc",
+      "unicode": "e735",
+      "unicode_decimal": 59189
+    },
+    {
+      "icon_id": "8815653",
+      "name": "music",
+      "font_class": "music",
+      "unicode": "e924",
+      "unicode_decimal": 59684
+    },
+    {
+      "icon_id": "12600976",
+      "name": "xls",
+      "font_class": "xls",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "1005264",
+      "name": "txt",
+      "font_class": "txt",
+      "unicode": "e6c8",
+      "unicode_decimal": 59080
+    }
+  ]
+}

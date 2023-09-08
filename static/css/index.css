@@ -1,0 +1,53 @@
+#app{
+    padding: 3px;
+}
+.list-icon{
+    margin-top:2px;
+    font-size: 25px !important;
+}
+.preview-image{
+    width: 25px;
+    height: 25px;
+}
+.list-span{
+    display: block;
+    width: 100%;
+    line-height:30px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size: 20px;
+    text-align: left;
+}
+.layui-panel{
+    margin-top:5px ;
+}
+.class-layer-video-custom .layui-layer-title{background-color: #EDEFF2;}
+.class-layer-video-custom .layui-layer-content{background-color: #000000;}
+.div-bottom{
+    padding: 6px 0 6px 0;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    width: calc(100% - 6px);
+    background: #FFF;
+}
+.div-top{
+    padding: 6px 0 6px 0;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: calc(100% - 6px);
+    background: #FFF;
+}
+#content{
+    margin-bottom: 70px;
+    margin-top: 50px;
+}
+
+.layui-input-group{
+    width: 100%;
+}
+.layui-form-item{
+    margin-bottom: 0;
+}

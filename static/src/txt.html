@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>view</title>
+    <link rel="stylesheet" href="/plugins/pdfh5/css/pdfh5.css" />
+    <style>
+        .pdf {
+            height: 30rem;
+            border: 1rem solid rgba(0, 0, 0, .1);
+        }
+    </style>
+</head>
+
+<body>
+<div id="txt"></div>
+<script src="/plugins/axios/dist/axios.min.js"></script>
+<script>
+    function initialization(path){
+        axios.get(`/api/view`, {params:{path}})
+            .then(function (res) {
+                if(res.status === 200){
+                    document.getElementById('txt').append(res.data)
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
+</body>
+
+</html>
