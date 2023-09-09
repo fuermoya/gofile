@@ -12,6 +12,8 @@ layui.use(['form', 'laydate', 'util','element'], function(){
         let idx = $(this).data("idx")
         let path = $(this).data("path")
         let name = $(this).data("name")
+        $('#content').find('.whole-click').removeClass("click-color")
+        $(this).addClass("click-color")
         if (!isdir){
             //查看图片
             let type = getFileType(name)
@@ -28,8 +30,9 @@ layui.use(['form', 'laydate', 'util','element'], function(){
             }
             return false
         }
-        oldPath.push(path)
-        form.val('demo-val-filter',{path})
+        let top = $(window).scrollTop()
+        oldPath.push({path,top})
+        form.val('demo-val-filter',{...path})
         allFile = await getAllFile(path)
         pushHtml(allFile)
         element.render('progress', 'demo-filter-progress');
@@ -47,16 +50,18 @@ layui.use(['form', 'laydate', 'util','element'], function(){
     util.on('lay-on', {
         // 返回
         "get-retreat":async function(){
-            //丢弃不用
-            oldPath.pop()
+            let currentPath = oldPath.pop()
             //需要返回的地址
             let path = oldPath.pop()
             if (path){
-                form.val('demo-val-filter',{path})
+                form.val('demo-val-filter',{'path':path.path})
                 //当前地址重新入栈
                 oldPath.push(path)
-                allFile = await getAllFile(path)
+                allFile = await getAllFile(path.path)
                 pushHtml(allFile)
+                $('html').animate({
+                    scrollTop:currentPath.top
+                },1000)
             }else {
                 form.val('demo-val-filter',{path:""})
                 init()
@@ -68,7 +73,9 @@ layui.use(['form', 'laydate', 'util','element'], function(){
             // 验证通过
             if(isvalid){
                 let data = form.val('demo-val-filter');
-                oldPath.push(data.path)
+                let path = data.path
+                let top = $(window).scrollTop()
+                oldPath.push({path,top})
                 allFile = await getAllFile(data.path)
                 pushHtml(allFile)
             }
@@ -215,7 +222,7 @@ async function getAllFile(path){
     })
     .then(function (res) {
         if (res.data.code !== 0){
-            layer.msg(res.msg, {icon: 2});
+            layer.msg("错误", {icon: 2});
             return
         }
         data = res.data.data;

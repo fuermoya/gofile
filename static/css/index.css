@@ -1,6 +1,9 @@
 #app{
     padding: 3px;
 }
+.click-color{
+    color: #1e9fff;
+}
 .list-icon{
     margin-top:2px;
     font-size: 25px !important;

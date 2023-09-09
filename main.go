@@ -32,17 +32,20 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/kardianos/service"
 	"gofile/server"
-	"io"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
 )
+
+//go:embed static
+var multi embed.FS
 
 type Services struct {
 	Log service.Logger
@@ -62,7 +65,7 @@ func ExecPath() string {
 
 // 获取 service 对象
 func getSrv() service.Service {
-	File, err := os.Create(ExecPath() + "/http-server.log")
+	File, err := os.Create(ExecPath() + "/gofile.log")
 	if err != nil {
 		File = os.Stdout
 	}
@@ -86,9 +89,9 @@ func getSrv() service.Service {
 
 // 启动windows服务
 func (srv *Services) Start(s service.Service) error {
-	//if srv.Log != nil {
-	srv.Log.Info("Start run http server")
-	//}
+	if srv.Log != nil {
+		srv.Log.Info("Start run http server")
+	}
 	go srv.StarServer()
 	return nil
 }
@@ -106,10 +109,8 @@ func (srv *Services) Stop(s service.Service) error {
 func (srv *Services) StarServer() {
 	gin.DisableConsoleColor()
 	var sr = server.Server{}
-	router := sr.Routers()
-	address := fmt.Sprintf("0.0.0.0:%d", 8088)
-	f, _ := os.Create(ExecPath() + "/gin.log")
-	gin.DefaultWriter = io.MultiWriter(f)
+	router := sr.Routers(multi)
+	address := fmt.Sprintf(":%d", 8088)
 	srv.Srv = &http.Server{
 		Addr:           address,
 		Handler:        router,
