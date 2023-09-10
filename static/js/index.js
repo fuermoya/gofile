@@ -1,9 +1,7 @@
-layui.use(['form', 'laydate', 'util','element'], function(){
+layui.use(['form', 'laydate', 'util'], function(){
     var form = layui.form;
     var layer = layui.layer;
     var util = layui.util;
-    var element = layui.element;
-    const download = new Download(element)
     const oldPath = new Stack();
     var allFile = []
     //打开
@@ -31,11 +29,10 @@ layui.use(['form', 'laydate', 'util','element'], function(){
             return false
         }
         let top = $(window).scrollTop()
-        oldPath.push({path,top})
-        form.val('demo-val-filter',{...path})
+        oldPath.push({path,top,idx})
+        form.val('demo-val-filter',{path})
         allFile = await getAllFile(path)
         pushHtml(allFile)
-        element.render('progress', 'demo-filter-progress');
         return false
     })
 
@@ -43,9 +40,16 @@ layui.use(['form', 'laydate', 'util','element'], function(){
     $('body').on('click','.download',function(){
         let path = $(this).data("path")
         let name = $(this).data("name")
-        download.downloadFile(`/api/readFile?path=${path}`,name,this)
+        let downloadElement = document.createElement('a')
+        downloadElement.href = `/api/readFile?path=${urlBase64(path)}`
+        //设置文件名
+        downloadElement.download = name
+        document.body.appendChild(downloadElement)
+        downloadElement.click()
+        document.body.removeChild(downloadElement)
         return false
     })
+
     // 普通事件
     util.on('lay-on', {
         // 返回
@@ -62,6 +66,8 @@ layui.use(['form', 'laydate', 'util','element'], function(){
                 $('html').animate({
                     scrollTop:currentPath.top
                 },1000)
+                $('#content').find('.whole-click').removeClass("click-color")
+                $('#list-idx-'+currentPath.idx).addClass("click-color")
             }else {
                 form.val('demo-val-filter',{path:""})
                 init()
@@ -122,10 +128,10 @@ function pushHtml(obj){
             preview = `<i class="layui-icon layui-icon-extend layui-extend-${obj[i].isDir ? 'folder':obj[i].icon} list-icon"></i>`
 
         if (obj[i].icon === 'picture' ){
-            preview = `<img class="preview-image" src="/api/readFile?path=${obj[i].path}" alt="${obj[i].name}">`
+            preview = `<img class="preview-image" src="/api/readFile?path=${urlBase64(obj[i].path)}" alt="${obj[i].name}">`
         }
 
-        let h = `<div class="layui-panel whole-click" data-idx="${i}" data-path="${obj[i].path}" data-isdir="${obj[i].isDir}" data-name="${obj[i].name}">
+        let h = `<div id="list-idx-${i}" class="layui-panel whole-click" data-idx="${i}" data-path="${obj[i].path}" data-isdir="${obj[i].isDir}" data-name="${obj[i].name}">
                             <div class="layui-row">
                                 <div class="layui-col-xs1 layui-col-md1" style="text-align: left">
                                     ${preview}
@@ -150,12 +156,12 @@ function lookVideo(layer,path,name){
     } catch (err) {
         suffix = '';
     }
-    if(suffix === 'mp4' || suffix === 'webm'){
+    if(suffix === 'mp4' || suffix === 'mkv' || suffix === 'webm'){
         layer.open({
             type: 1,
             title:name,
-            area: ['100%','80%'], // 宽高
-            closeBtn: 1,
+            area: ['100%','90%'], // 宽高
+            shadeClose: true,
             skin: 'class-layer-video-custom',
             content: '<div id="dplayer"></div>',
             success:function (layero, index){
@@ -163,8 +169,16 @@ function lookVideo(layer,path,name){
                 const dp = new DPlayer({
                     container: document.getElementById('dplayer'),
                     video: {
-                        url: '/api/lookVideo?path='+path,
+                        url: '/api/lookVideo?path='+urlBase64(path),
                     },
+                    //外挂字幕
+                    // subtitle: {
+                    //     url: 'dplayer.vtt',
+                    //     type: 'ass',
+                    //     fontSize: '25px',
+                    //     bottom: '10%',
+                    //     color: '#b7daff',
+                    // },
                 });
             }
         });
@@ -186,7 +200,7 @@ function getView(layer,path,type){
         success: function(layero, index, that){
             // 获取 iframe 的窗口对象
             let iframeWin =  window[layero.find('iframe')[0]['name']];
-            iframeWin.initialization(path);
+            iframeWin.initialization(urlBase64(path));
             layer.iframeAuto(index);
         }
     });
@@ -200,7 +214,7 @@ function lookImg(layer,allFile,name,idx){
         if(allFile[i].icon === 'picture'){
             let liEle = document.createElement("li");
             let img = new Image();
-            img.src = "/api/readFile?path="+allFile[i].path;
+            img.src = "/api/readFile?path="+urlBase64(allFile[i].path);
             img.alt = name
             liEle.appendChild(img);
             ulEle.appendChild(liEle);
@@ -307,4 +321,8 @@ function getFileType(fileName) {
 
     // 其他 文件类型
     return 'file';
+}
+
+function urlBase64(url){
+    return encodeURIComponent(Base64.encode(url))
 }

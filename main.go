@@ -1,33 +1,3 @@
-//package main
-//
-//import (
-//	"fmt"
-//	"gofile/server"
-//	"net/http"
-//	"time"
-//)
-//
-//func main() {
-//	var sr = server.Server{}
-//	router := sr.Routers()
-//	address := fmt.Sprintf(":%d", 8088)
-//	var s = http.Server{
-//		Addr:           address,
-//		Handler:        router,
-//		ReadTimeout:    20 * time.Second,
-//		WriteTimeout:   20 * time.Second,
-//		MaxHeaderBytes: 1 << 20,
-//	}
-//	// 保证文本顺序输出
-//	time.Sleep(2 * time.Microsecond)
-//	fmt.Printf(`
-//	欢迎使用 gofile
-//	访问地址:http://127.0.0.1%s
-//	`, address)
-//	err := s.ListenAndServe().Error()
-//	fmt.Println(err)
-//}
-
 package main
 
 import (

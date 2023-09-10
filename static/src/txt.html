@@ -16,7 +16,7 @@
 <script src="/plugins/axios/dist/axios.min.js"></script>
 <script>
     function initialization(path){
-        axios.get(`/api/view`, {params:{path}})
+        axios.get(`/api/view?path=${path}`, {})
             .then(function (res) {
                 if(res.status === 200){
                     document.getElementById('txt').append(res.data)

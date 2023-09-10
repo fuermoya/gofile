@@ -1,21 +1,25 @@
 package server
 
 import (
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"os"
 )
 
 // LookVideo TODO  不支持的视频需要转码，还有字幕
 func (s *Server) LookVideo(c *gin.Context) {
-	pathname := c.Query("path")
-	file, err := os.Open(pathname)
-	defer file.Close()
+	filePath := c.Query("path")
+	decodeString, err := base64.StdEncoding.DecodeString(filePath)
 	if err != nil {
-		c.Redirect(http.StatusFound, "./static/404.html")
+		c.AbortWithError(404, err)
 		return
 	}
-	c.Header("Content-Type", "application/octet-stream")
-	c.Header("Content-Disposition", "attachment; filename="+file.Name())
-	c.File(pathname)
+	filePath = string(decodeString)
+	file, err := os.Open(filePath)
+	defer file.Close()
+	if err != nil {
+		c.AbortWithError(404, err)
+		return
+	}
+	c.File(filePath)
 }
