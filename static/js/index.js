@@ -145,7 +145,7 @@ function pushHtml(obj){
         $("#content").append(h)
     }
 }
-
+const subType = {'.vtt':'webvtt','.ass':'ass'}
 //播放视频
 function lookVideo(layer,path,name){
     // 后缀获取
@@ -164,22 +164,36 @@ function lookVideo(layer,path,name){
             shadeClose: true,
             skin: 'class-layer-video-custom',
             content: '<div id="dplayer"></div>',
-            success:function (layero, index){
+            success:async function (layero, index){
                 layer.iframeAuto(index);
-                const dp = new DPlayer({
-                    container: document.getElementById('dplayer'),
-                    video: {
-                        url: '/api/lookVideo?path='+urlBase64(path),
-                    },
-                    //外挂字幕
-                    // subtitle: {
-                    //     url: 'dplayer.vtt',
-                    //     type: 'ass',
-                    //     fontSize: '25px',
-                    //     bottom: '10%',
-                    //     color: '#b7daff',
-                    // },
-                });
+                await axios.get('/api/getSubtitle?path='+urlBase64(path)).then(function (res){
+                    if(res.status === 200){
+                        let subtitlePath=res.data.data.path,
+                            subtitleType=res.data.data.ext
+                        let dPlayerConf = {
+                            container: document.getElementById('dplayer'),
+                            video: {
+                                url: '/api/lookVideo?path='+urlBase64(path),
+                            },
+                        }
+                        if(subtitlePath && subtitlePath !== ''){
+                            //外挂字幕
+                            let subtitle = {
+                                    subtitle: {
+                                    url: `/api/readFile?path=${urlBase64(subtitlePath)}`,
+                                    type: subType[subtitleType],
+                                    fontSize: '20px',
+                                    bottom: '10%',
+                                    color: '#b7daff',
+                                }
+                            }
+                            dPlayerConf = {...dPlayerConf,...subtitle}
+                        }
+                        const dp = new DPlayer(dPlayerConf);
+                    }
+                }).catch(function (error){
+                    console.log(error)
+                })
             }
         });
     }else {
@@ -229,10 +243,10 @@ function lookImg(layer,allFile,name,idx){
 }
 
 //获取列表
-async function getAllFile(path){
+async function getAllFile(dir){
     let data = []
     await axios.get('/api/getAllFile', {
-        params:{path}
+        params:{dir}
     })
     .then(function (res) {
         if (res.data.code !== 0){

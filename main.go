@@ -84,8 +84,6 @@ func (srv *Services) StarServer() {
 	srv.Srv = &http.Server{
 		Addr:           address,
 		Handler:        router,
-		ReadTimeout:    20 * time.Second,
-		WriteTimeout:   20 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 	// 保证文本顺序输出

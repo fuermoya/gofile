@@ -1,13 +1,36 @@
 package middleware
 
 import (
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
+	"gofile/utils"
+	"net/http"
 )
 
-// Cors 直接放行所有跨域请求并放行所有 OPTIONS 方法
-func Cors() gin.HandlerFunc {
+// DecodePath 解码path的base64
+func DecodePath() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Header("X-Content-Type-Options", "no")
+		filePath := c.Query("path")
+		decodeString, err := base64.StdEncoding.DecodeString(filePath)
+		if err != nil {
+			c.Status(http.StatusNotFound)
+			c.Abort()
+			return
+		}
+		c.Set("path", string(decodeString))
+		c.Next()
+	}
+}
 
+// IsLocalIp 校验是否是局域网
+func IsLocalIp() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ip := c.ClientIP()
+		if !utils.IsLocalIp(ip) {
+			c.Status(http.StatusNotFound)
+			c.Abort()
+			return
+		}
+		c.Next()
 	}
 }

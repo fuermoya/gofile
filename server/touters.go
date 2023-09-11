@@ -4,6 +4,7 @@ import (
 	"embed"
 	_ "embed"
 	"github.com/gin-gonic/gin"
+	middleware "gofile/midd"
 	fs2 "io/fs"
 	"net/http"
 	"strconv"
@@ -11,6 +12,8 @@ import (
 
 func (s *Server) Routers(multi embed.FS) *gin.Engine {
 	router := gin.Default()
+	router.Use(middleware.DecodePath())
+	router.Use(middleware.IsLocalIp())
 
 	fs := http.FS(multi)
 	indexHtml, _ := multi.ReadFile("static/index.html")
@@ -47,6 +50,7 @@ func (s *Server) Routers(multi embed.FS) *gin.Engine {
 	group.GET("getAllFile", s.GetAllFile)
 	group.GET("readFile", s.ReadFile)
 	group.GET("lookVideo", s.LookVideo)
+	group.GET("getSubtitle", s.GetSubtitle)
 	group.GET("view", s.View)
 	return router
 }

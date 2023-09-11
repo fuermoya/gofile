@@ -1,7 +1,6 @@
 package server
 
 import (
-	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	response "gofile/common"
@@ -43,15 +42,10 @@ func (p Attributes) Swap(i, j int) {
 }
 
 func (s *Server) ReadFile(c *gin.Context) {
-	filePath := c.Query("path")
-	decodeString, err := base64.StdEncoding.DecodeString(filePath)
-	if err != nil {
-		c.AbortWithError(404, err)
-		return
-	}
-	filePath = string(decodeString)
+	pathAny, _ := c.Get("path")
+	filePath := pathAny.(string)
 	file, err := os.Open(filePath)
-	defer file.Close()
+	file.Close()
 	if err != nil {
 		c.Status(http.StatusNotFound)
 		return
@@ -60,7 +54,7 @@ func (s *Server) ReadFile(c *gin.Context) {
 }
 
 func (s *Server) GetAllFile(c *gin.Context) {
-	pathname := c.Query("path")
+	pathname := c.Query("dir")
 	rd, err := os.ReadDir(pathname)
 	if err != nil {
 		fmt.Println("read dir fail:", err)
