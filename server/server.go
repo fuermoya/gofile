@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
+	response "github.com/fuermoya/gofile/common"
 	"github.com/gin-gonic/gin"
-	response "gofile/common"
 	"net/http"
 	"os"
 	"path/filepath"

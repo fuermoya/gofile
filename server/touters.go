@@ -3,8 +3,8 @@ package server
 import (
 	"embed"
 	_ "embed"
+	middleware "github.com/fuermoya/gofile/midd"
 	"github.com/gin-gonic/gin"
-	middleware "gofile/midd"
 	fs2 "io/fs"
 	"net/http"
 	"strconv"

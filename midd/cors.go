@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"encoding/base64"
+	"github.com/fuermoya/gofile/utils"
 	"github.com/gin-gonic/gin"
-	"gofile/utils"
 	"net/http"
 )
 
