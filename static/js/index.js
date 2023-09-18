@@ -41,7 +41,7 @@ layui.use(['form', 'laydate', 'util'], function(){
         let path = $(this).data("path")
         let name = $(this).data("name")
         let downloadElement = document.createElement('a')
-        downloadElement.href = `/api/readFile?path=${urlBase64(path)}`
+        downloadElement.href = `/api/downloadFile?path=${urlBase64(path)}`
         //设置文件名
         downloadElement.download = name
         document.body.appendChild(downloadElement)

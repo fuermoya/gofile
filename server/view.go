@@ -4,19 +4,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
 func (s *Server) View(c *gin.Context) {
 	pathAny, _ := c.Get("path")
-	filePath := pathAny.(string)
-	fileType := strings.ToLower(path.Ext(filePath))
+	pathStr := pathAny.(string)
+	fileType := strings.ToLower(filepath.Ext(pathStr))
 
 	//后缀是pdf直接读取文件类容返回
 	if fileType == ".txt" {
 		c.Header("Content-Type", "application/pdf;charset=UTF-8")
-		file, err := os.ReadFile(filePath)
+		file, err := os.ReadFile(pathStr)
 		if err != nil {
 			c.Status(http.StatusNotFound)
 			return
@@ -27,7 +27,7 @@ func (s *Server) View(c *gin.Context) {
 
 	if fileType == ".pdf" {
 		c.Header("Content-Type", "application/pdf;charset=UTF-8")
-		file, err := os.ReadFile(filePath)
+		file, err := os.ReadFile(pathStr)
 		if err != nil {
 			c.Status(http.StatusNotFound)
 			return

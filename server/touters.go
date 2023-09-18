@@ -49,6 +49,7 @@ func (s *Server) Routers(multi embed.FS) *gin.Engine {
 	group.GET("getLogicalDrives", s.GetLogicalDrives)
 	group.GET("getAllFile", s.GetAllFile)
 	group.GET("readFile", s.ReadFile)
+	group.GET("downloadFile", s.DownloadFile)
 	group.GET("lookVideo", s.LookVideo)
 	group.GET("getSubtitle", s.GetSubtitle)
 	group.GET("view", s.View)
