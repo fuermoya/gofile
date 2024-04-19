@@ -17,7 +17,8 @@
     display: block;
     width: 100%;
     line-height:28px;
-    /*overflow:hidden;*/
+    word-wrap: break-word;
+    overflow: hidden;
     /*text-overflow:ellipsis;*/
     /*white-space:nowrap;*/
     font-size: 18px;
