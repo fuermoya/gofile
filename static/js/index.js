@@ -122,21 +122,21 @@ function pushHtml(obj){
     $("#content").empty()
     for (let i in obj){
         obj[i]['icon'] = getFileType(obj[i].name)
-        let downloadIcon = ` <div class="layui-col-xs1 layui-col-md1 download" data-path="${obj[i].path}" data-name="${obj[i].name}" style="text-align: right;">
-                                        <i class="layui-icon layui-icon-download-circle list-icon" style="display: block;margin-top: 2px;"></i>
+        let downloadIcon = ` <div class="layui-col-xs1 layui-col-md1 download" data-path="${obj[i].path}" data-name="${obj[i].name}" style="text-align: right;position: relative;display: contents;">
+                                        <i class="layui-icon layui-icon-download-circle list-icon" style="right: 2px;position: absolute;top: 50%;transform: translateY(-50%);"></i>
                                     </div>`,
-            preview = `<i class="layui-icon layui-icon-extend layui-extend-${obj[i].isDir ? 'folder':obj[i].icon} list-icon"></i>`
+            preview = `<i class="layui-icon layui-icon-extend layui-extend-${obj[i].isDir ? 'folder':obj[i].icon} list-icon" style="position: absolute;top: 50%;transform: translateY(-50%);"></i>`
 
         if (obj[i].icon === 'picture' ){
             preview = `<img class="preview-image" src="/api/readFile?path=${urlBase64(obj[i].path)}" alt="${obj[i].name}">`
         }
 
         let h = `<div id="list-idx-${i}" class="layui-panel whole-click" data-idx="${i}" data-path="${obj[i].path}" data-isdir="${obj[i].isDir}" data-name="${obj[i].name}">
-                            <div class="layui-row">
-                                <div class="layui-col-xs1 layui-col-md1" style="text-align: left">
+                            <div class="layui-row" style="padding: 5px 0 5px 0;">
+                                <div class="layui-col-xs1 layui-col-md1" style="text-align: left;position: relative;display: contents;">
                                     ${preview}
                                 </div>
-                                <div class="layui-col-xs10 layui-col-md10 ">
+                                <div class="layui-col-xs10 layui-col-md10 " style="margin-left: 30px;">
                                     <span class="list-span">${obj[i].name}</span>
                                 </div>
                                ${obj[i].isDir ? '' : downloadIcon}
@@ -153,6 +153,7 @@ function lookVideo(layer,path,name){
     try {
         const flieArr = name.split('.');
         suffix = flieArr[flieArr.length - 1];
+        suffix = suffix.toLocaleLowerCase();
     } catch (err) {
         suffix = '';
     }

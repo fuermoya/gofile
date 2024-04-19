@@ -5,8 +5,9 @@
     color: #1e9fff;
 }
 .list-icon{
-    margin-top:2px;
-    font-size: 25px !important;
+    /*margin-top:2px;*/
+    font-size: 28px !important;
+    text-align: right;
 }
 .preview-image{
     width: 25px;
@@ -15,11 +16,11 @@
 .list-span{
     display: block;
     width: 100%;
-    line-height:30px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    font-size: 20px;
+    line-height:28px;
+    /*overflow:hidden;*/
+    /*text-overflow:ellipsis;*/
+    /*white-space:nowrap;*/
+    font-size: 18px;
     text-align: left;
 }
 .layui-panel{
